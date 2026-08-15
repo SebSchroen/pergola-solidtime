@@ -1,7 +1,7 @@
 version: v1
 components:
   - name: app
-    user: 0
+ #   user: 0
     docker:
       image: solidtime/solidtime:latest
     ports:
@@ -66,7 +66,7 @@ components:
         config-ref: DB_PASSWORD
 
   - name: scheduler
-    user: 0
+  #  user: 0
     docker:
       image: solidtime/solidtime:latest
     storage:
@@ -126,7 +126,7 @@ components:
         config-ref: DB_PASSWORD
 
   - name: queue
-    user: 0 
+  #  user: 0 
     docker:
       image: solidtime/solidtime:latest
     storage:
