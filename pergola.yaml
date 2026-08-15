@@ -10,7 +10,7 @@ components:
         port: 8000
     storage:
       - name: app-storage
-        path: /var/www/html/storage
+        path: /var/www/html/storage/app
         size: 500Mi
     env:
       - name: CONTAINER_MODE
@@ -44,7 +44,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        component-ref: gotenberg
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -65,13 +65,9 @@ components:
   - name: scheduler
     docker:
       image: solidtime/solidtime:latest
-    command:
-      - php
-      - /var/www/html/artisan
-      - schedule:run
     storage:
       - name: scheduler-storage
-        path: /var/www/html/storage
+        path: /var/www/html/storage/app
         size: 500Mi
     env:
       - name: CONTAINER_MODE
@@ -105,7 +101,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        component-ref: gotenberg
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -128,7 +124,7 @@ components:
       image: solidtime/solidtime:latest
     storage:
       - name: queue-storage
-        path: /var/www/html/storage
+        path: /var/www/html/storage/app
         size: 500Mi
     env:
       - name: CONTAINER_MODE
@@ -164,7 +160,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        component-ref: gotenberg
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN

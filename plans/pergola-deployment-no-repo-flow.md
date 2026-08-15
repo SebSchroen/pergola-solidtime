@@ -25,7 +25,7 @@ pergola create project pergola-solidtime \
   --display-name "Solidtime Time Tracker"
 
 # 4. Generate the Deploy SSH Key for GitHub and add it to your repo's Deploy Keys
-pergola list ssh -p pergola-solidtime
+pergola create ssh -p pergola-solidtime
 ```
 
 ---
