@@ -108,6 +108,8 @@ components:
         config-ref: APP_KEY
       - name: APP_DOMAIN
         config-ref: APP_DOMAIN
+      - name: APP_URL
+        config-ref: APP_URL
       - name: APP_FORCE_HTTPS
         config-ref: APP_FORCE_HTTPS
       - name: PASSPORT_PRIVATE_KEY
@@ -167,6 +169,8 @@ components:
         config-ref: APP_KEY
       - name: APP_DOMAIN
         config-ref: APP_DOMAIN
+      - name: APP_URL
+        config-ref: APP_URL
       - name: APP_FORCE_HTTPS
         config-ref: APP_FORCE_HTTPS
       - name: PASSPORT_PRIVATE_KEY
