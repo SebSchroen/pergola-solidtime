@@ -1,0 +1,208 @@
+version: v1
+components:
+  - name: app
+    docker:
+      image: solidtime/solidtime:latest
+    ports:
+      - 8000
+    ingresses:
+      - host: solidtime
+        port: 8000
+    storage:
+      - name: app-storage
+        path: /var/www/html/storage
+        size: 500Mi
+    env:
+      - name: CONTAINER_MODE
+        value: http
+      - name: APP_NAME
+        value: solidtime
+      - name: VITE_APP_NAME
+        value: solidtime
+      - name: APP_ENV
+        value: production
+      - name: APP_DEBUG
+        value: "false"
+      - name: TRUSTED_PROXIES
+        value: "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+      - name: LOG_CHANNEL
+        value: stderr_daily
+      - name: LOG_LEVEL
+        value: debug
+      - name: DB_CONNECTION
+        value: pgsql
+      - name: DB_HOST
+        component-ref: database
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_SSLMODE
+        value: prefer
+      - name: QUEUE_CONNECTION
+        value: database
+      - name: FILESYSTEM_DISK
+        value: local
+      - name: PUBLIC_FILESYSTEM_DISK
+        value: public
+      - name: GOTENBERG_URL
+        value: "http://gotenberg:3000"
+      - name: APP_KEY
+        config-ref: APP_KEY
+      - name: APP_DOMAIN
+        config-ref: APP_DOMAIN
+      - name: APP_FORCE_HTTPS
+        config-ref: APP_FORCE_HTTPS
+      - name: PASSPORT_PRIVATE_KEY
+        config-ref: PASSPORT_PRIVATE_KEY
+      - name: PASSPORT_PUBLIC_KEY
+        config-ref: PASSPORT_PUBLIC_KEY
+      - name: DB_DATABASE
+        config-ref: DB_DATABASE
+      - name: DB_USERNAME
+        config-ref: DB_USERNAME
+      - name: DB_PASSWORD
+        config-ref: DB_PASSWORD
+
+  - name: scheduler
+    docker:
+      image: solidtime/solidtime:latest
+    command:
+      - php
+      - /var/www/html/artisan
+      - schedule:run
+    storage:
+      - name: scheduler-storage
+        path: /var/www/html/storage
+        size: 500Mi
+    env:
+      - name: CONTAINER_MODE
+        value: scheduler
+      - name: APP_NAME
+        value: solidtime
+      - name: VITE_APP_NAME
+        value: solidtime
+      - name: APP_ENV
+        value: production
+      - name: APP_DEBUG
+        value: "false"
+      - name: TRUSTED_PROXIES
+        value: "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+      - name: LOG_CHANNEL
+        value: stderr_daily
+      - name: LOG_LEVEL
+        value: debug
+      - name: DB_CONNECTION
+        value: pgsql
+      - name: DB_HOST
+        component-ref: database
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_SSLMODE
+        value: prefer
+      - name: QUEUE_CONNECTION
+        value: database
+      - name: FILESYSTEM_DISK
+        value: local
+      - name: PUBLIC_FILESYSTEM_DISK
+        value: public
+      - name: GOTENBERG_URL
+        value: "http://gotenberg:3000"
+      - name: APP_KEY
+        config-ref: APP_KEY
+      - name: APP_DOMAIN
+        config-ref: APP_DOMAIN
+      - name: APP_FORCE_HTTPS
+        config-ref: APP_FORCE_HTTPS
+      - name: PASSPORT_PRIVATE_KEY
+        config-ref: PASSPORT_PRIVATE_KEY
+      - name: PASSPORT_PUBLIC_KEY
+        config-ref: PASSPORT_PUBLIC_KEY
+      - name: DB_DATABASE
+        config-ref: DB_DATABASE
+      - name: DB_USERNAME
+        config-ref: DB_USERNAME
+      - name: DB_PASSWORD
+        config-ref: DB_PASSWORD
+
+  - name: queue
+    docker:
+      image: solidtime/solidtime:latest
+    storage:
+      - name: queue-storage
+        path: /var/www/html/storage
+        size: 500Mi
+    env:
+      - name: CONTAINER_MODE
+        value: worker
+      - name: WORKER_COMMAND
+        value: "php /var/www/html/artisan queue:work"
+      - name: APP_NAME
+        value: solidtime
+      - name: VITE_APP_NAME
+        value: solidtime
+      - name: APP_ENV
+        value: production
+      - name: APP_DEBUG
+        value: "false"
+      - name: TRUSTED_PROXIES
+        value: "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+      - name: LOG_CHANNEL
+        value: stderr_daily
+      - name: LOG_LEVEL
+        value: debug
+      - name: DB_CONNECTION
+        value: pgsql
+      - name: DB_HOST
+        component-ref: database
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_SSLMODE
+        value: prefer
+      - name: QUEUE_CONNECTION
+        value: database
+      - name: FILESYSTEM_DISK
+        value: local
+      - name: PUBLIC_FILESYSTEM_DISK
+        value: public
+      - name: GOTENBERG_URL
+        value: "http://gotenberg:3000"
+      - name: APP_KEY
+        config-ref: APP_KEY
+      - name: APP_DOMAIN
+        config-ref: APP_DOMAIN
+      - name: APP_FORCE_HTTPS
+        config-ref: APP_FORCE_HTTPS
+      - name: PASSPORT_PRIVATE_KEY
+        config-ref: PASSPORT_PRIVATE_KEY
+      - name: PASSPORT_PUBLIC_KEY
+        config-ref: PASSPORT_PUBLIC_KEY
+      - name: DB_DATABASE
+        config-ref: DB_DATABASE
+      - name: DB_USERNAME
+        config-ref: DB_USERNAME
+      - name: DB_PASSWORD
+        config-ref: DB_PASSWORD
+
+  - name: database
+    docker:
+      image: postgres:15
+    ports:
+      - 5432
+    storage:
+      - name: database-storage
+        path: /var/lib/postgresql/data
+        size: 5Gi
+    env:
+      - name: PGPASSWORD
+        config-ref: DB_PASSWORD
+      - name: POSTGRES_DB
+        config-ref: DB_DATABASE
+      - name: POSTGRES_USER
+        config-ref: DB_USERNAME
+      - name: POSTGRES_PASSWORD
+        config-ref: DB_PASSWORD
+
+  - name: gotenberg
+    docker:
+      image: gotenberg/gotenberg:8
+    ports:
+      - 3000
