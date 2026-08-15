@@ -1,7 +1,7 @@
 version: v1
 components:
   - name: app
- #   user: 0
+    user: 1000
     docker:
       image: solidtime/solidtime:latest
     ports:
@@ -10,7 +10,7 @@ components:
       - host: solidtime
         port: 8000
     storage:
-      - name: app-storage
+      - name: app-strg
         path: /var/www/html/storage/app
         size: 500Mi
     env:
@@ -68,11 +68,11 @@ components:
         config-ref: DB_PASSWORD
 
   - name: scheduler
-  #  user: 0
+    user: 1000
     docker:
       image: solidtime/solidtime:latest
     storage:
-      - name: scheduler-storage
+      - name: scheduler-strg
         path: /var/www/html/storage/app
         size: 500Mi
     env:
@@ -130,11 +130,11 @@ components:
         config-ref: DB_PASSWORD
 
   - name: queue
-  #  user: 0 
+    user: 1000 
     docker:
       image: solidtime/solidtime:latest
     storage:
-      - name: queue-storage
+      - name: queue-strg
         path: /var/www/html/storage/app
         size: 500Mi
     env:
