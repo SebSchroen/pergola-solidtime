@@ -12,7 +12,7 @@ components:
     storage:
       - name: app-strg
         path: /var/www/html/storage/app
-        size: 500Mi
+        size: 250Mi
     env:
       - name: CONTAINER_MODE
         value: http
@@ -66,6 +66,24 @@ components:
         config-ref: DB_USERNAME
       - name: DB_PASSWORD
         config-ref: DB_PASSWORD
+      - name: MAIL_MAILER
+        config-ref: MAIL_MAILER
+      - name: MAIL_HOST
+        config-ref: MAIL_HOST
+      - name: MAIL_PORT
+        config-ref: MAIL_PORT
+      - name: MAIL_ENCRYPTION
+        config-ref: MAIL_ENCRYPTION
+      - name: MAIL_FROM_ADDRESS
+        config-ref: MAIL_FROM_ADDRESS
+      - name: MAIL_FROM_NAME
+        config-ref: MAIL_FROM_NAME
+      - name: MAIL_USERNAME
+        config-ref: MAIL_USERNAME
+      - name: MAIL_PASSWORD
+        config-ref: MAIL_PASSWORD
+      - name: SUPER_ADMINS
+        config-ref: SUPER_ADMINS
 
   - name: scheduler
     user: 1000
@@ -74,7 +92,7 @@ components:
     storage:
       - name: scheduler-strg
         path: /var/www/html/storage/app
-        size: 500Mi
+        size: 250Mi
     env:
       - name: CONTAINER_MODE
         value: scheduler
@@ -128,6 +146,24 @@ components:
         config-ref: DB_USERNAME
       - name: DB_PASSWORD
         config-ref: DB_PASSWORD
+      - name: MAIL_MAILER
+        config-ref: MAIL_MAILER
+      - name: MAIL_HOST
+        config-ref: MAIL_HOST
+      - name: MAIL_PORT
+        config-ref: MAIL_PORT
+      - name: MAIL_ENCRYPTION
+        config-ref: MAIL_ENCRYPTION
+      - name: MAIL_FROM_ADDRESS
+        config-ref: MAIL_FROM_ADDRESS
+      - name: MAIL_FROM_NAME
+        config-ref: MAIL_FROM_NAME
+      - name: MAIL_USERNAME
+        config-ref: MAIL_USERNAME
+      - name: MAIL_PASSWORD
+        config-ref: MAIL_PASSWORD
+      - name: SUPER_ADMINS
+        config-ref: SUPER_ADMINS
 
   - name: queue
     user: 1000 
@@ -136,7 +172,7 @@ components:
     storage:
       - name: queue-strg
         path: /var/www/html/storage/app
-        size: 500Mi
+        size: 250Mi
     env:
       - name: CONTAINER_MODE
         value: worker
@@ -192,6 +228,24 @@ components:
         config-ref: DB_USERNAME
       - name: DB_PASSWORD
         config-ref: DB_PASSWORD
+      - name: MAIL_MAILER
+        config-ref: MAIL_MAILER
+      - name: MAIL_HOST
+        config-ref: MAIL_HOST
+      - name: MAIL_PORT
+        config-ref: MAIL_PORT
+      - name: MAIL_ENCRYPTION
+        config-ref: MAIL_ENCRYPTION
+      - name: MAIL_FROM_ADDRESS
+        config-ref: MAIL_FROM_ADDRESS
+      - name: MAIL_FROM_NAME
+        config-ref: MAIL_FROM_NAME
+      - name: MAIL_USERNAME
+        config-ref: MAIL_USERNAME
+      - name: MAIL_PASSWORD
+        config-ref: MAIL_PASSWORD
+      - name: SUPER_ADMINS
+        config-ref: SUPER_ADMINS
 
   - name: database
     docker:
@@ -201,7 +255,7 @@ components:
     storage:
       - name: database-storage
         path: /var/lib/postgresql/data
-        size: 1Gi
+        size: 500Mi
     env:
       - name: PGPASSWORD
         config-ref: DB_PASSWORD

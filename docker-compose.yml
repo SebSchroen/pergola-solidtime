@@ -59,8 +59,8 @@ services:
   database:
     restart: always
     image: 'postgres:15'
-#    ports:
-#      - '${FORWARD_DB_PORT:-5432}:5432'
+    ports:
+      - '${FORWARD_DB_PORT:-5432}:5432'
     environment:
       PGPASSWORD: '${DB_PASSWORD:-secret}'
       POSTGRES_DB: '${DB_DATABASE}'
