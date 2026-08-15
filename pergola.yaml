@@ -44,8 +44,10 @@ components:
         value: local
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
+      - name: GOTENBERG_HOST
+        component-ref: gotenberg
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        value: "http://$(GOTENBERG_HOST):3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -104,8 +106,10 @@ components:
         value: local
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
+      - name: GOTENBERG_HOST
+        component-ref: gotenberg
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        value: "http://$(GOTENBERG_HOST):3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -166,8 +170,10 @@ components:
         value: local
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
+      - name: GOTENBERG_HOST
+        component-ref: gotenberg
       - name: GOTENBERG_URL
-        value: "http://gotenberg:3000"
+        value: "http://$(GOTENBERG_HOST):3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
