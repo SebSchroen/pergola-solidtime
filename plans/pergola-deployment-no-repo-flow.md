@@ -25,7 +25,7 @@ pergola create project pergola-solidtime \
   --display-name "Solidtime Time Tracker"
 
 # 4. Generate the Deploy SSH Key for GitHub and add it to your repo's Deploy Keys
-pergola create ssh -p pergola-solidtime
+pergola list ssh -p pergola-solidtime
 ```
 
 ---
@@ -80,4 +80,18 @@ Because all components utilize public images defined statically inside [`pergola
 ```bash
 # Push release deploying only config (this fetches & starts the images declared in pergola.yaml)
 pergola push release -p pergola-solidtime -s dev -c default
+```
+
+### Step 4: Database Setup & Administration Command Executions
+Once the components are active, establish the database schemas and admin credentials via `pergola exec`:
+
+```bash
+# 1. Run Migrations
+pergola exec app -p pergola-solidtime -s dev -- php artisan migrate --force
+
+# 2. Setup Passport Client Keys
+pergola exec app -p pergola-solidtime -s dev -- php artisan passport:keys --force
+
+# 3. Register the initial Administrator User
+pergola exec app -p pergola-solidtime -s dev -- php artisan solidtime:create-admin
 ```

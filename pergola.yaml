@@ -1,6 +1,7 @@
 version: v1
 components:
   - name: app
+    user: 0
     docker:
       image: solidtime/solidtime:latest
     ports:
@@ -44,7 +45,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        component-ref: gotenberg
+        value: "http://gotenberg:3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -65,6 +66,7 @@ components:
         config-ref: DB_PASSWORD
 
   - name: scheduler
+    user: 0
     docker:
       image: solidtime/solidtime:latest
     storage:
@@ -103,7 +105,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        component-ref: gotenberg
+        value: "http://gotenberg:3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -124,6 +126,7 @@ components:
         config-ref: DB_PASSWORD
 
   - name: queue
+    user: 0 
     docker:
       image: solidtime/solidtime:latest
     storage:
@@ -164,7 +167,7 @@ components:
       - name: PUBLIC_FILESYSTEM_DISK
         value: public
       - name: GOTENBERG_URL
-        component-ref: gotenberg
+        value: "http://gotenberg:3000"
       - name: APP_KEY
         config-ref: APP_KEY
       - name: APP_DOMAIN
@@ -192,7 +195,7 @@ components:
     storage:
       - name: database-storage
         path: /var/lib/postgresql/data
-        size: 5Gi
+        size: 1Gi
     env:
       - name: PGPASSWORD
         config-ref: DB_PASSWORD

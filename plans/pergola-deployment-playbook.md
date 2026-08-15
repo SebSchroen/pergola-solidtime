@@ -1,6 +1,6 @@
 # Deployment Plan for Solidtime on Pergola
 
-This playbook contains the exact step-by-step CLI execution sequence to deploy **Solidtime** onto Pergola, using the [`pergola.yaml`](../pergola.yaml) manifest, binding environment variables from [`.env`](../.env) and [`laravel.env`](../laravel.env), and running the deployment pipelines.
+This playbook contains the exact step-by-step CLI execution sequence to deploy **Solidtime** onto Pergola, using the [`pergola.yaml`](../pergola.yaml) manifest, binding environment variables from [`.env`](../.env) and [`laravel.env`](../laravel.env), running the deployment pipelines, executing migrations, and creating the admin account.
 
 ---
 
@@ -79,4 +79,35 @@ pergola push release -p pergola-solidtime -s dev -b master_b1 -c default
 
 # 4. Monitor deployed components status
 pergola list component -p pergola-solidtime -s dev
+```
+
+---
+
+## Part 5: Database Provisioning & Application Setup
+
+Once the components are active and reporting `running`, we run the database migrations and setup task commands using the `pergola exec` feature.
+
+### 1. Run Database Migrations
+Run the Laravel schema migration command in the `app` container. This will connect to the `database` component and provision the schema.
+
+```bash
+pergola exec app -p pergola-solidtime -s dev -- php artisan migrate --force
+```
+
+### 2. Generate Passport Client Keys
+Initialize passport oauth client keys so authentication flows work correctly:
+
+```bash
+pergola exec app -p pergola-solidtime -s dev -- php artisan passport:keys --force
+```
+
+### 3. Create the Admin User Account
+Solidtime provides a Laravel console helper command to register the initial administrator:
+
+```bash
+# This starts an interactive command where you can safely enter your admin email and password.
+# 'pergola exec' natively supports interactive stdin/stdout streams.
+pergola exec app -p pergola-solidtime -s dev -- php artisan admin:user:create "Sebastian Schroen" "pergola@finconda.de" --verify-email
+
+
 ```
