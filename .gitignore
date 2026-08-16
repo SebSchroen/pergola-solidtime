@@ -1,3 +1,4 @@
 .env
 laravel.env
 plans
+logs

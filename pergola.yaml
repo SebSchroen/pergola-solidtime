@@ -84,7 +84,8 @@ components:
         config-ref: MAIL_PASSWORD
       - name: SUPER_ADMINS
         config-ref: SUPER_ADMINS
-
+      - name: APP_ENABLE_REGISTRATION
+        config-ref: APP_ENABLE_REGISTRATION
   - name: scheduler
     user: 1000
     docker:
@@ -164,7 +165,8 @@ components:
         config-ref: MAIL_PASSWORD
       - name: SUPER_ADMINS
         config-ref: SUPER_ADMINS
-
+      - name: APP_ENABLE_REGISTRATION
+        config-ref: APP_ENABLE_REGISTRATION
   - name: queue
     user: 1000 
     docker:
@@ -246,7 +248,8 @@ components:
         config-ref: MAIL_PASSWORD
       - name: SUPER_ADMINS
         config-ref: SUPER_ADMINS
-
+      - name: APP_ENABLE_REGISTRATION
+        config-ref: APP_ENABLE_REGISTRATION
   - name: database
     docker:
       image: postgres:15
@@ -255,7 +258,7 @@ components:
     storage:
       - name: database-storage
         path: /var/lib/postgresql/data
-        size: 500Mi
+        size: 250Mi
     env:
       - name: PGPASSWORD
         config-ref: DB_PASSWORD
