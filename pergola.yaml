@@ -274,3 +274,23 @@ components:
       image: gotenberg/gotenberg:8
     ports:
       - 3000
+  - name: stop-components
+    docker:
+      file: Dockerfile
+    scheduled: "0 17 * * *"
+    env:
+    - name: KEY_ID
+      config-ref: KEY_ID 
+    - name: KEY_SECRET
+      config-ref: KEY_SECRET
+    - name: STAGE
+      config-ref: STAGE
+    - name: PROJECT
+      config-ref: PROJECT
+    command: ["bash", "-c"]
+    args:
+    - |
+      pergola stop component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
+      pergola stop component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
+      pergola stop component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
+      pergola stop component gotenberg -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
