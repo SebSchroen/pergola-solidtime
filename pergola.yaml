@@ -292,6 +292,8 @@ components:
     - |
       echo $PROJECT; \
       echo $STAGE; \
+      echo $KEY_ID; \
+      echo $KEY_SECRET; \
       pergola stop component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET" ; \
       pergola stop component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
       pergola stop component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
