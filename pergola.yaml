@@ -277,7 +277,7 @@ components:
   - name: stop-components
     docker:
       file: Dockerfile
-    scheduled: "0 17 * * *"
+    scheduled: "@release"
     env:
     - name: KEY_ID
       config-ref: KEY_ID 
@@ -290,7 +290,9 @@ components:
     command: ["bash", "-c"]
     args:
     - |
-      pergola stop component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
-      pergola stop component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
-      pergola stop component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
+      echo $PROJECT; \
+      echo $STAGE; \
+      pergola stop component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET" ; \
+      pergola stop component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
+      pergola stop component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
       pergola stop component gotenberg -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
