@@ -277,7 +277,7 @@ components:
   - name: stop-components
     docker:
       file: Dockerfile
-    scheduled: "@release"
+    scheduled: "30 16 * * 1-5"
     env:
     - name: KEY_ID
       config-ref: KEY_ID 
@@ -287,14 +287,38 @@ components:
       config-ref: STAGE
     - name: PROJECT
       config-ref: PROJECT
+    - name: ENDPOINT
+      config-ref: ENDPOINT
     command: ["bash", "-c"]
     args:
     - |
       echo $PROJECT; \
-      echo $STAGE; \
-      echo $KEY_ID; \
-      echo $KEY_SECRET; \
+      pergola set cli-config --endpoint $ENDPOINT --config default; \   
       pergola stop component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET" ; \
       pergola stop component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
       pergola stop component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
       pergola stop component gotenberg -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"
+  - name: start-solidtime-components
+    docker:
+      file: Dockerfile
+    scheduled: "30 5 * * 1-5"
+    env:
+    - name: KEY_ID
+      config-ref: KEY_ID 
+    - name: KEY_SECRET
+      config-ref: KEY_SECRET
+    - name: STAGE
+      config-ref: STAGE
+    - name: PROJECT
+      config-ref: PROJECT
+    - name: ENDPOINT
+      config-ref: ENDPOINT
+    command: ["bash", "-c"]
+    args:
+    - |
+      echo $PROJECT; \
+      pergola set cli-config --endpoint $ENDPOINT --config default; \      
+      pergola start component app -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
+      pergola start component queue -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
+      pergola start component scheduler -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET"; \
+      pergola start component gotenberg -p $PROJECT -s $STAGE --access-key "$KEY_ID:$KEY_SECRET";
