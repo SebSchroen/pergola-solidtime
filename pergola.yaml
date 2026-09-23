@@ -3,7 +3,7 @@ components:
   - name: app
     user: 1000
     docker:
-      image: solidtime/solidtime:latest
+      image: solidtime/solidtime:0.20
     ports:
       - 8000
     ingresses:
@@ -89,7 +89,7 @@ components:
   - name: scheduler
     user: 1000
     docker:
-      image: solidtime/solidtime:latest
+      image: solidtime/solidtime:0.20
     storage:
       - name: scheduler-strg
         path: /var/www/html/storage/app
@@ -170,7 +170,7 @@ components:
   - name: queue
     user: 1000 
     docker:
-      image: solidtime/solidtime:latest
+      image: solidtime/solidtime:0.20
     storage:
       - name: queue-strg
         path: /var/www/html/storage/app
